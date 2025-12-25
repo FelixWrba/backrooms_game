@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://ce8s2udm3erpf"]
+
+[ext_resource type="Texture2D" uid="uid://duchlj6ojhd0m" path="res://textures/carpet.webp" id="1_raol3"]
+[ext_resource type="Texture2D" uid="uid://s7filpgbyqns" path="res://textures/ceiling.png" id="2_etd82"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gsw31"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ici4h"]
+albedo_texture = ExtResource("1_raol3")
+uv1_scale = Vector3(3, 3, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_inubh"]
+material = SubResource("StandardMaterial3D_ici4h")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ilsnr"]
+albedo_color = Color(0.64041996, 0.71, 0.36209998, 1)
+albedo_texture = ExtResource("2_etd82")
+metallic_specular = 0.0
+uv1_scale = Vector3(4, 4, 4)
+uv1_offset = Vector3(-0.125, 0, 0)
+
+[node name="ChunkBase" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36867738, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 8, -0.05116439, 0, 0)
+shape = SubResource("BoxShape3D_gsw31")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 8, 0, 0, 0)
+mesh = SubResource("BoxMesh_inubh")
+
+[node name="Ceiling" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling"]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 8, -0.05116439, 0, 0)
+shape = SubResource("BoxShape3D_gsw31")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling"]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 8, 0, 0, 0)
+mesh = SubResource("BoxMesh_inubh")
+surface_material_override/0 = SubResource("StandardMaterial3D_ilsnr")

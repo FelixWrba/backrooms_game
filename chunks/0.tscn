@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://g6x5cxk0a8gj"]
+
+[ext_resource type="PackedScene" uid="uid://ce8s2udm3erpf" path="res://chunk_objects/chunk_base.tscn" id="1_fpsue"]
+[ext_resource type="PackedScene" uid="uid://dh7xaj5fwvdj" path="res://chunk_objects/light.tscn" id="3_c67d1"]
+
+[node name="0" type="Node3D"]
+
+[node name="ChunkBase" parent="." instance=ExtResource("1_fpsue")]
+
+[node name="Light" parent="." instance=ExtResource("3_c67d1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9486895, 0)

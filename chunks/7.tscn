@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqmraqva2urpc"]
+
+[ext_resource type="PackedScene" uid="uid://ce8s2udm3erpf" path="res://chunk_objects/chunk_base.tscn" id="1_3w1t1"]
+[ext_resource type="PackedScene" uid="uid://bxblh451rnqxk" path="res://chunk_objects/wall.tscn" id="3_t3ui8"]
+
+[node name="7" type="Node3D"]
+
+[node name="ChunkBase" parent="." instance=ExtResource("1_3w1t1")]
+
+[node name="Wall" parent="." instance=ExtResource("3_t3ui8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.875, 1.6, 0)
+
+[node name="Wall2" parent="." instance=ExtResource("3_t3ui8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.875, 1.6, 0)

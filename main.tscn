@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://84l7jcg6di1h"]
+
+[ext_resource type="PackedScene" uid="uid://djq2781rdyser" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://kjuteng1uxhf" path="res://level.tscn" id="2_0xm2m"]
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 1
+background_color = Color(0.34360203, 0.28323072, 1.92523e-07, 1)
+ambient_light_color = Color(1, 1, 1, 1)
+fog_mode = 1
+fog_light_color = Color(0.12347304, 0.12347304, 0.12347304, 1)
+fog_light_energy = 0.0
+fog_density = 1.0
+fog_depth_curve = 0.9659362
+fog_depth_begin = 32.0
+fog_depth_end = 1000.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="player" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9172106, 4.5062265)
+
+[node name="level" parent="." instance=ExtResource("2_0xm2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.023415565, 0.030364037, 0.010374546)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")

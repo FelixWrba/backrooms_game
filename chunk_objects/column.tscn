@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4oqcbbs3xrq3"]
+
+[ext_resource type="Texture2D" uid="uid://bd8snpk6q8dw0" path="res://textures/wall.jpeg" id="1_sfx07"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c67d1"]
+albedo_texture = ExtResource("1_sfx07")
+uv1_scale = Vector3(1, 2, 1)
+uv1_offset = Vector3(1, 1, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tck1t"]
+material = SubResource("StandardMaterial3D_c67d1")
+size = Vector3(1, 3, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lyr4o"]
+size = Vector3(1, 3, 1)
+
+[node name="Column" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_tck1t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_lyr4o")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bb1jx3ydnobkq"]
+
+[ext_resource type="PackedScene" uid="uid://ce8s2udm3erpf" path="res://chunk_objects/chunk_base.tscn" id="1_3s61l"]
+[ext_resource type="PackedScene" uid="uid://dh7xaj5fwvdj" path="res://chunk_objects/light.tscn" id="2_s2na0"]
+[ext_resource type="PackedScene" uid="uid://bxblh451rnqxk" path="res://chunk_objects/wall.tscn" id="3_w011j"]
+[ext_resource type="PackedScene" uid="uid://b4oqcbbs3xrq3" path="res://chunk_objects/column.tscn" id="4_s2na0"]
+
+[node name="5" type="Node3D"]
+
+[node name="ChunkBase" parent="." instance=ExtResource("1_3s61l")]
+
+[node name="Light" parent="." instance=ExtResource("2_s2na0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9486895, 0)
+
+[node name="Wall" parent="." instance=ExtResource("3_w011j")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.875, 1.6, 0)
+
+[node name="Wall2" parent="." instance=ExtResource("3_w011j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 3.875)
+
+[node name="Column" parent="." instance=ExtResource("4_s2na0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.6, -2.5)
+
+[node name="Column2" parent="." instance=ExtResource("4_s2na0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.6, 1.5)
+
+[node name="Column3" parent="." instance=ExtResource("4_s2na0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.6, -2.5)

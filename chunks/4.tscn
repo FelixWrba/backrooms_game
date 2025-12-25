@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://3rkb2krrjvla"]
+
+[ext_resource type="PackedScene" uid="uid://ce8s2udm3erpf" path="res://chunk_objects/chunk_base.tscn" id="1_2b8qh"]
+[ext_resource type="PackedScene" uid="uid://dh7xaj5fwvdj" path="res://chunk_objects/light.tscn" id="2_3my6h"]
+[ext_resource type="PackedScene" uid="uid://bxblh451rnqxk" path="res://chunk_objects/wall.tscn" id="3_n48pp"]
+
+[node name="4" type="Node3D"]
+
+[node name="ChunkBase" parent="." instance=ExtResource("1_2b8qh")]
+
+[node name="Light" parent="." instance=ExtResource("2_3my6h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9486895, 0)
+
+[node name="Wall" parent="." instance=ExtResource("3_n48pp")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.875, 1.6, 0)
+
+[node name="Wall2" parent="." instance=ExtResource("3_n48pp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 3.875)
