@@ -1,0 +1,146 @@
+[gd_scene load_steps=13 format=3 uid="uid://ce721ykaspukj"]
+
+[ext_resource type="PackedScene" uid="uid://g6x5cxk0a8gj" path="res://chunks/0.tscn" id="1_4hy44"]
+[ext_resource type="PackedScene" uid="uid://bq5rmnmi6yaw0" path="res://chunks/2.tscn" id="2_ytr4m"]
+[ext_resource type="PackedScene" uid="uid://3rkb2krrjvla" path="res://chunks/4.tscn" id="3_l48gv"]
+[ext_resource type="PackedScene" uid="uid://bl86rxp5sklx1" path="res://chunks/6.tscn" id="4_ecwwl"]
+[ext_resource type="PackedScene" uid="uid://bua0ohmdym1mc" path="res://effects.tscn" id="4_gq33n"]
+[ext_resource type="Script" uid="uid://bg2axuu48yq8f" path="res://screens/menu.gd" id="4_l48gv"]
+[ext_resource type="PackedScene" uid="uid://ddkmrk1vutgkq" path="res://chunks/12.tscn" id="5_ytr4m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4hy44"]
+font_size = 48
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_l48gv"]
+font_size = 12
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_ecwwl"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1.9024088, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_l48gv"]
+resource_name = "menu_animation"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(-1.9198622, 0, 0, 0.16666667, 0, -2.443461, -1.6666667, 0.08726647, 0, 0, -1.9198622, -1.6666667, -0.08726647, 0, 0),
+"times": PackedFloat32Array(0, 10, 20)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kk3ma"]
+_data = {
+&"RESET": SubResource("Animation_ecwwl"),
+&"menu_animation": SubResource("Animation_l48gv")
+}
+
+[node name="Node3D" type="Node3D"]
+
+[node name="0" parent="." instance=ExtResource("1_4hy44")]
+
+[node name="2" parent="." instance=ExtResource("2_ytr4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="3" parent="." instance=ExtResource("2_ytr4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
+
+[node name="4" parent="." instance=ExtResource("3_l48gv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 7)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.3255681, 0, -0.9455186, 0, 1, 0, 0.9455186, 0, -0.3255681, -3.133, 1.8, 0.7113614)
+far = 100.0
+
+[node name="Effects" parent="Camera3D" instance=ExtResource("4_gq33n")]
+
+[node name="menu" type="Control" parent="Camera3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_l48gv")
+
+[node name="title" type="Label" parent="Camera3D/menu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -204.0
+offset_top = 20.0
+offset_right = 204.0
+offset_bottom = 87.0
+grow_horizontal = 2
+text = "Die Hinterzimmer"
+label_settings = SubResource("LabelSettings_4hy44")
+
+[node name="Control" type="VBoxContainer" parent="Camera3D/menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.25
+offset_top = -65.0
+offset_right = 118.25
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="play_button" type="Button" parent="Camera3D/menu/Control"]
+layout_mode = 2
+text = "Spielen"
+
+[node name="exit_button" type="Button" parent="Camera3D/menu/Control"]
+layout_mode = 2
+text = "Verlassen"
+
+[node name="copyright" type="Label" parent="Camera3D/menu"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -24.0
+offset_right = 432.0
+offset_bottom = -7.0
+grow_vertical = 0
+text = "(c) Copyright 2025 Felix Wrba. Alle Rechte vorbehalten."
+label_settings = SubResource("LabelSettings_l48gv")
+
+[node name="6" parent="." instance=ExtResource("4_ecwwl")]
+transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 8)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_kk3ma")
+}
+autoplay = "menu_animation"
+
+[node name="12" parent="." instance=ExtResource("5_ytr4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
+
+[connection signal="pressed" from="Camera3D/menu/Control/play_button" to="Camera3D/menu" method="_on_play_button_pressed"]
+[connection signal="pressed" from="Camera3D/menu/Control/exit_button" to="Camera3D/menu" method="_on_exit_button_pressed"]

@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://djq2781rdyser"]
+[gd_scene load_steps=7 format=3 uid="uid://djq2781rdyser"]
 
 [ext_resource type="Script" uid="uid://c3qgrfxkufrvj" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://bua0ohmdym1mc" path="res://effects.tscn" id="2_hqtel"]
+[ext_resource type="PackedScene" uid="uid://b35mktx2ai8k0" path="res://screens/death.tscn" id="2_i3pqv"]
+[ext_resource type="PackedScene" uid="uid://bru2yd5a30up6" path="res://screens/pause.tscn" id="2_onrkg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -21,3 +24,13 @@ shape = SubResource("CapsuleShape3D_4flbx")
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="head"]
+
+[node name="Effects" parent="head/Camera3D" instance=ExtResource("2_hqtel")]
+
+[node name="pause" parent="head/Camera3D" instance=ExtResource("2_onrkg")]
+visible = false
+
+[node name="death" parent="head/Camera3D" instance=ExtResource("2_i3pqv")]
+visible = false
+
+[connection signal="continue_game" from="head/Camera3D/pause" to="." method="_on_pause_continue_game"]

@@ -6,6 +6,8 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.5
 
+var isPaused = false
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -31,7 +33,27 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _input(event) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and not isPaused:
 		rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENSITIVITY))
 		head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENSITIVITY))
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+	
+	# Pause game
+	if Input.is_action_just_pressed("pause") and not isPaused:
+		get_tree().paused = true
+		isPaused = true
+		get_node('head/Camera3D/pause').visible = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
+	# Die
+	if Input.is_action_just_pressed('ui_up'):
+		get_tree().paused = true
+		get_node('head/Camera3D/death').visible = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+# Unpause game
+func _on_pause_continue_game() -> void:
+		get_tree().paused = false
+		isPaused = false
+		get_node('head/Camera3D/pause').visible = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3 uid="uid://b35mktx2ai8k0"]
+
+[ext_resource type="Script" uid="uid://bjuant4g0h6h6" path="res://screens/death.gd" id="1_u0uju"]
+[ext_resource type="Shader" uid="uid://bhbflk45jygr8" path="res://vignette.gdshader" id="2_43847"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vewd"]
+shader = ExtResource("2_43847")
+shader_parameter/outerRadius = 1.0
+shader_parameter/MainAlpha = 0.750000035625
+
+[sub_resource type="LabelSettings" id="LabelSettings_a6ppo"]
+font_size = 36
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[node name="death" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u0uju")
+
+[node name="vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0vewd")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.14117648)
+
+[node name="rgb_displace" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0vewd")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.14117648)
+
+[node name="ui" type="Control" parent="."]
+z_index = 1
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ui"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -305.0
+offset_top = 22.0
+offset_right = 305.0
+offset_bottom = 72.0
+grow_horizontal = 2
+text = "Sie wurden durch Entity 89 getötet."
+label_settings = SubResource("LabelSettings_a6ppo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.0
+offset_top = -33.0
+offset_right = 177.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="retry" type="Button" parent="ui/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+text = "Erneut versuchen"
+
+[node name="exit" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+text = "Zum Hauptmenü verlassen"
+
+[connection signal="pressed" from="ui/VBoxContainer/retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="ui/VBoxContainer/exit" to="." method="_on_exit_pressed"]

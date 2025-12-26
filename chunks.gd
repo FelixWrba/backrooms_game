@@ -33,7 +33,7 @@ var chunkWalls = [
 	[0, 0, 0, 0],
 	[0, 1, 1, 1],
 ]
-var chunkWallLookup = createWalllLookup(chunkWalls)
+var chunkWallLookup = createWalllLookup()
 var chunks = {}
 
 func _ready() -> void:
@@ -47,7 +47,7 @@ func _process(_delta: float) -> void:
 	removeChunks(start, end)
 	spawnChunks(start, end)
 
-func createWalllLookup(walls: Array) -> Dictionary:
+func createWalllLookup() -> Dictionary:
 	var lookup = {
 		0: {
 			0: {
