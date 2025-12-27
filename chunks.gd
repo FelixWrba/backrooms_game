@@ -1,6 +1,7 @@
 extends Node
 
 @onready var player: CharacterBody3D = $"../../player"
+const smiler = preload("uid://b8lldogimavgu")
 
 const chunkSize = 8
 const renderDistance = 8
@@ -19,6 +20,12 @@ var chunkOptions = [
 	load("res://chunks/11.tscn"),
 	load("res://chunks/12.tscn"),
 ]
+var darkChunks = {
+	6: Vector3(1.0, 1.5, 0.0),
+	7: Vector3(0.0, 1.5, 0.0),
+	8: Vector3(0.0, 1.5, 0.2),
+	12: Vector3(0.0, 1.5, 0.0),
+}
 var chunkWalls = [
 	[0, 0, 0, 0],
 	[0, 0, 0, 0],
@@ -114,6 +121,8 @@ func removeChunks(start: Dictionary, end: Dictionary):
  
 func createChunk(x: int, z: int) -> void:
 	const wallProbability = 0.3
+	const smilerProbability = 1
+	
 	var top := int(randf() < wallProbability)
 	var right := int(randf() < wallProbability)
 	var bottom := int(randf() < wallProbability)
@@ -137,11 +146,16 @@ func createChunk(x: int, z: int) -> void:
 	if possibleChunks.size() != 0:
 		selectedChunk = possibleChunks[randi_range(0, possibleChunks.size() - 1)]
 	
-	var chunkInstance = chunkOptions[selectedChunk.id].instantiate()
+	var chunkInstance: Node = chunkOptions[selectedChunk.id].instantiate()
 	chunkInstance.position.x = x * chunkSize
 	chunkInstance.position.z = z * chunkSize
 	chunkInstance.rotation.y = deg_to_rad(selectedChunk.angle)
 	add_child(chunkInstance)
+	
+	if darkChunks.has(selectedChunk.id) and randf() < smilerProbability:
+		var smilerInstance =  smiler.instantiate()
+		smilerInstance.position = darkChunks[selectedChunk.id]
+		chunkInstance.add_child(smilerInstance)
 	
 	if not chunks.has(x):
 		chunks[x] = {}

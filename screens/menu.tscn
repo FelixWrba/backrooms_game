@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ce721ykaspukj"]
+[gd_scene load_steps=15 format=3 uid="uid://ce721ykaspukj"]
 
 [ext_resource type="PackedScene" uid="uid://g6x5cxk0a8gj" path="res://chunks/0.tscn" id="1_4hy44"]
 [ext_resource type="PackedScene" uid="uid://bq5rmnmi6yaw0" path="res://chunks/2.tscn" id="2_ytr4m"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bua0ohmdym1mc" path="res://effects.tscn" id="4_gq33n"]
 [ext_resource type="Script" uid="uid://bg2axuu48yq8f" path="res://screens/menu.gd" id="4_l48gv"]
 [ext_resource type="PackedScene" uid="uid://ddkmrk1vutgkq" path="res://chunks/12.tscn" id="5_ytr4m"]
+[ext_resource type="PackedScene" uid="uid://b8lldogimavgu" path="res://smiler.tscn" id="8_tsmig"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4hy44"]
 font_size = 48
@@ -53,6 +54,10 @@ _data = {
 &"RESET": SubResource("Animation_ecwwl"),
 &"menu_animation": SubResource("Animation_l48gv")
 }
+
+[sub_resource type="Environment" id="Environment_tsmig"]
+background_energy_multiplier = 0.0
+ambient_light_energy = 0.0
 
 [node name="Node3D" type="Node3D"]
 
@@ -141,6 +146,13 @@ autoplay = "menu_animation"
 
 [node name="12" parent="." instance=ExtResource("5_ytr4m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
+
+[node name="smiler" parent="." instance=ExtResource("8_tsmig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.701, 1.629, 11.556325)
+isHostile = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tsmig")
 
 [connection signal="pressed" from="Camera3D/menu/Control/play_button" to="Camera3D/menu" method="_on_play_button_pressed"]
 [connection signal="pressed" from="Camera3D/menu/Control/exit_button" to="Camera3D/menu" method="_on_exit_button_pressed"]

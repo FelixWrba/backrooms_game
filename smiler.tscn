@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://b8lldogimavgu"]
+
+[ext_resource type="Script" uid="uid://ckum0ewat6i5r" path="res://smiler.gd" id="1_cklaw"]
+[ext_resource type="Texture2D" uid="uid://bi0nis6norh6l" path="res://textures/smiler.png" id="1_y686f"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cklaw"]
+radius = 3.0
+
+[sub_resource type="Animation" id="Animation_cn3tx"]
+length = 10.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.5, -0.083333336, 0.083333336, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:position:z")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.083333336, -0.20000002, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.083333336, -0.2617994, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
+[sub_resource type="Animation" id="Animation_cklaw"]
+resource_name = "smiler_attack"
+length = 10.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -1.1, -0.083333336, 0.083333336, 0, 0),
+"times": PackedFloat32Array(0.5333333, 1.1333333)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:position:z")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 2, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.95, -0.009444456, 0.008333336, 0, 0, -0.95, -0.009444456, 0.008333336, 0, 0),
+"times": PackedFloat32Array(0.5333333, 1.1333333, 1.19, 1.25)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -1.571, -0.083333336, -0.2617994, 0, 0),
+"times": PackedFloat32Array(0.5333333, 1.1333333)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ibney"]
+_data = {
+&"RESET": SubResource("Animation_cn3tx"),
+&"smiler_attack": SubResource("Animation_cklaw")
+}
+
+[node name="smiler" type="Node3D"]
+script = ExtResource("1_cklaw")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+cast_shadow = 0
+pixel_size = 0.003
+texture = ExtResource("1_y686f")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0, 0, 0, 1)
+light_negative = true
+omni_range = 4.0
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_cklaw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ibney")
+}
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

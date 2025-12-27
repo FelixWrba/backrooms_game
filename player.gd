@@ -7,6 +7,7 @@ const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.5
 
 var isPaused = false
+var isDead = false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -16,6 +17,9 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
+	if isDead:
+		return
+	
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -33,6 +37,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _input(event) -> void:
+	if isDead: return
+	
 	if event is InputEventMouseMotion and not isPaused:
 		rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENSITIVITY))
 		head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENSITIVITY))
@@ -44,16 +50,17 @@ func _input(event) -> void:
 		isPaused = true
 		get_node('head/Camera3D/pause').visible = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		
-	# Die
-	if Input.is_action_just_pressed('ui_up'):
-		get_tree().paused = true
-		get_node('head/Camera3D/death').visible = true
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 # Unpause game
 func _on_pause_continue_game() -> void:
-		get_tree().paused = false
-		isPaused = false
-		get_node('head/Camera3D/pause').visible = false
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	get_tree().paused = false
+	isPaused = false
+	get_node('head/Camera3D/pause').visible = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func die(faceAngle: Vector3) -> void:
+	rotate_y(faceAngle.y)
+	head.rotate_x(faceAngle.z)
+	isDead = true
+	$AnimationPlayer.play("death")
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
