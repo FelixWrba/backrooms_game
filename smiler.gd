@@ -5,6 +5,8 @@ extends Node3D
 @export var attackDistance := 0.7
 
 @onready var player: CharacterBody3D
+@onready var burnTimer: Timer = $BurnTimer
+@onready var audioPlayer: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 var isChasingPlayer = false
 
@@ -19,11 +21,17 @@ func _process(delta: float) -> void:
 	
 	if isChasingPlayer:
 		var direction := (player.global_position - global_position)
+		# play chase sound
+		if not audioPlayer.playing:
+			audioPlayer.play()
+		
 		if direction.length() > attackDistance:
 			direction = direction.normalized()
 			global_position += direction * speed * delta
 			global_position.y = 1.4
 		else:
+			burnTimer.stop()
+			burnTimer.start()
 			isChasingPlayer = false
 			player.call('die', Vector3(deg_to_rad(rotation_degrees.x - 180), deg_to_rad(rotation_degrees.y - 180), 0))
 			$AnimationPlayer.play("smiler_attack")
@@ -31,7 +39,13 @@ func _process(delta: float) -> void:
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body.is_in_group('player'):
 		isChasingPlayer = true
+		burnTimer.start()
 		
 func _on_area_3d_body_exited(body: Node3D) -> void:
 	if body.is_in_group('player'):
 		isChasingPlayer = false
+		burnTimer.stop()
+		
+func _on_burn_timer_timeout() -> void:
+	# delete itself
+	queue_free()

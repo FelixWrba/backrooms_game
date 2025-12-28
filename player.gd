@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
-@onready var head = $head
+@onready var head: Node3D = $head
+@onready var coordinates: Label = $head/Camera3D/coordinates
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -13,6 +14,9 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _physics_process(delta: float) -> void:
+	# Display the coordinates:
+	coordinates.text = "X: {0} | Z: {1}".format([str(round(position.x)), str(round(position.z))])
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta

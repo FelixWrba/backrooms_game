@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ce721ykaspukj"]
+[gd_scene load_steps=16 format=3 uid="uid://ce721ykaspukj"]
 
 [ext_resource type="PackedScene" uid="uid://g6x5cxk0a8gj" path="res://chunks/0.tscn" id="1_4hy44"]
 [ext_resource type="PackedScene" uid="uid://bq5rmnmi6yaw0" path="res://chunks/2.tscn" id="2_ytr4m"]
@@ -32,6 +32,29 @@ tracks/0/keys = {
 "points": PackedFloat32Array(-1.9024088, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/black:color:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/black:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_l48gv"]
 resource_name = "menu_animation"
@@ -49,10 +72,38 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 10, 20)
 }
 
+[sub_resource type="Animation" id="Animation_tsmig"]
+resource_name = "menu_start"
+length = 0.6
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/black:color:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.083333336, 0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/black:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kk3ma"]
 _data = {
 &"RESET": SubResource("Animation_ecwwl"),
-&"menu_animation": SubResource("Animation_l48gv")
+&"menu_animation": SubResource("Animation_l48gv"),
+&"menu_start": SubResource("Animation_tsmig")
 }
 
 [sub_resource type="Environment" id="Environment_tsmig"]
@@ -60,6 +111,7 @@ background_energy_multiplier = 0.0
 ambient_light_energy = 0.0
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("4_l48gv")
 
 [node name="0" parent="." instance=ExtResource("1_4hy44")]
 
@@ -85,7 +137,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_l48gv")
 
 [node name="title" type="Label" parent="Camera3D/menu"]
 layout_mode = 1
@@ -135,6 +186,16 @@ grow_vertical = 0
 text = "(c) Copyright 2025 Felix Wrba. Alle Rechte vorbehalten."
 label_settings = SubResource("LabelSettings_l48gv")
 
+[node name="black" type="ColorRect" parent="Camera3D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
 [node name="6" parent="." instance=ExtResource("4_ecwwl")]
 transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 8)
 
@@ -147,12 +208,13 @@ autoplay = "menu_animation"
 [node name="12" parent="." instance=ExtResource("5_ytr4m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
 
-[node name="smiler" parent="." instance=ExtResource("8_tsmig")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.701, 1.629, 11.556325)
-isHostile = false
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tsmig")
 
-[connection signal="pressed" from="Camera3D/menu/Control/play_button" to="Camera3D/menu" method="_on_play_button_pressed"]
-[connection signal="pressed" from="Camera3D/menu/Control/exit_button" to="Camera3D/menu" method="_on_exit_button_pressed"]
+[node name="smiler" parent="." instance=ExtResource("8_tsmig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.5, 11)
+isHostile = false
+
+[connection signal="pressed" from="Camera3D/menu/Control/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Camera3D/menu/Control/exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

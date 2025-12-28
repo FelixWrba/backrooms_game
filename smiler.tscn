@@ -1,50 +1,42 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8lldogimavgu"]
+[gd_scene load_steps=8 format=3 uid="uid://b8lldogimavgu"]
 
 [ext_resource type="Script" uid="uid://ckum0ewat6i5r" path="res://smiler.gd" id="1_cklaw"]
 [ext_resource type="Texture2D" uid="uid://bi0nis6norh6l" path="res://textures/smiler.png" id="1_y686f"]
+[ext_resource type="AudioStream" uid="uid://ceykvdep40eg1" path="res://sounds/smiler.mp3" id="3_cn3tx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cklaw"]
 radius = 3.0
 
 [sub_resource type="Animation" id="Animation_cn3tx"]
-length = 10.0
-tracks/0/type = "bezier"
+length = 0.001
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite3D:position:y")
+tracks/0/path = NodePath("Sprite3D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.5, -0.083333336, 0.083333336, 0, 0),
-"times": PackedFloat32Array(0, 0.5)
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
 }
-tracks/1/type = "bezier"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite3D:position:z")
+tracks/1/path = NodePath("Sprite3D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.083333336, -0.20000002, 0, 0),
-"times": PackedFloat32Array(0, 0.5)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite3D:rotation:x")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.083333336, -0.2617994, 0, 0),
-"times": PackedFloat32Array(0, 0.5)
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_cklaw"]
 resource_name = "smiler_attack"
-length = 10.0
+length = 5.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -52,9 +44,9 @@ tracks/0/path = NodePath("Sprite3D:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -1.1, -0.083333336, 0.083333336, 0, 0),
-"times": PackedFloat32Array(0.5333333, 1.1333333)
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -1.1, -0.083333336, 0.083333336, 0, 0, -1.1, -0.1795345, 0.026273333, 0.048243284, -0.0070599904, -1.7, -0.021666687, 5.9376326e-10, 0.7033334, -1.9274452e-08),
+"times": PackedFloat32Array(0.1, 0.7, 1.75, 1.8)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -63,9 +55,9 @@ tracks/1/path = NodePath("Sprite3D:position:z")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 2, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.95, -0.009444456, 0.008333336, 0, 0, -0.95, -0.009444456, 0.008333336, 0, 0),
-"times": PackedFloat32Array(0.5333333, 1.1333333, 1.19, 1.25)
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.9, -0.083333336, -0.083333336, 0, 0, -0.97, -0.083333336, -0.083333336, 0, 0, -0.97, -0.00026663145, 0, 0.7250001, 0, -0.97, -0.021666687, 0, 0.7033334, 0, -0.97, -0.0017567079, 0, 0, 0),
+"times": PackedFloat32Array(0.1, 0.6999665, 0.7716666, 0.79666656, 0.8666665, 0.86836666, 0.9383666, 0.96336657, 1.0350667, 1.0566666, 1.1283667, 1.1533667, 1.2250668, 1.2566667, 1.3283668, 1.3533667, 1.4250668, 1.4666666, 1.5383667, 1.5633667, 1.6350667, 1.6366665, 1.7666667, 1.7772069)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
@@ -76,7 +68,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -1.571, -0.083333336, -0.2617994, 0, 0),
-"times": PackedFloat32Array(0.5333333, 1.1333333)
+"times": PackedFloat32Array(0.1, 0.7)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ibney"]
@@ -108,5 +100,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_ibney")
 }
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_cn3tx")
+
+[node name="BurnTimer" type="Timer" parent="."]
+wait_time = 2.5
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="timeout" from="BurnTimer" to="." method="_on_burn_timer_timeout"]

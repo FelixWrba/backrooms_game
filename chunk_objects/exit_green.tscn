@@ -1,0 +1,89 @@
+[gd_scene load_steps=12 format=3 uid="uid://bd5y4kcp8wpqo"]
+
+[ext_resource type="Texture2D" uid="uid://ba4kybe53bdti" path="res://textures/exit_sign.jpg" id="1_pwqyx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yvbre"]
+albedo_color = Color(0.86898494, 0.8689849, 0.8689849, 1)
+metallic = 1.0
+metallic_specular = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_yvbre"]
+material = SubResource("StandardMaterial3D_yvbre")
+size = Vector3(1, 2, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pwqyx"]
+albedo_color = Color(0, 0.72, 0.03599997, 1)
+emission_enabled = true
+emission = Color(0.056357868, 0.31023037, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8k62c"]
+material = SubResource("StandardMaterial3D_pwqyx")
+size = Vector3(1.4, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7fgur"]
+albedo_color = Color(0, 0.72, 0.03599997, 1)
+emission_enabled = true
+emission = Color(0.056357868, 0.31023037, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ejxdg"]
+material = SubResource("StandardMaterial3D_7fgur")
+size = Vector3(0.2, 2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8k62c"]
+metallic = 1.0
+metallic_specular = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_pwqyx"]
+material = SubResource("StandardMaterial3D_8k62c")
+size = Vector3(0.04, 0.04, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7fgur"]
+material = SubResource("StandardMaterial3D_8k62c")
+size = Vector3(0.12, 0.04, 0.02)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pwqyx"]
+size = Vector3(1.4, 2.2, 0.2)
+
+[node name="ExitGreen" type="StaticBody3D"]
+
+[node name="door" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_yvbre")
+
+[node name="top" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.05)
+mesh = SubResource("BoxMesh_8k62c")
+
+[node name="right" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 0.05)
+mesh = SubResource("BoxMesh_ejxdg")
+skeleton = NodePath("../top")
+
+[node name="left" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0.05)
+mesh = SubResource("BoxMesh_ejxdg")
+skeleton = NodePath("../top")
+
+[node name="sign" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4328867, 0.1)
+pixel_size = 0.0007
+texture = ExtResource("1_pwqyx")
+
+[node name="exit_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1008728, 0.17525715)
+modulate = Color(0.9083333, 1, 0.9, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "Ausgang - Exit"
+font_size = 20
+uppercase = true
+
+[node name="handle_base" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.05, 0.1)
+mesh = SubResource("BoxMesh_pwqyx")
+
+[node name="handle" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32, 0.05, 0.14)
+mesh = SubResource("BoxMesh_7fgur")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0.05)
+shape = SubResource("BoxShape3D_pwqyx")
