@@ -28,9 +28,9 @@ var smilerChunks = {
 	12: Vector3(0.0, 1.5, 0.0),
 }
 var exitChunks = {
-	2: {'x': 3.792, 'y': 1.1, 'z': 0.0, 'angle': -90.0},
-	3: {'x': 3.792, 'y': 1.1, 'z': 0.0, 'angle': -90.0},
-	12: {'x': -3.792, 'y': 1.1, 'z': 0.0, 'angle': 90.0},
+	2: {'x': 3.71, 'y': 1.1, 'z': 0.0, 'angle': -90.0},
+	3: {'x': 3.71, 'y': 1.1, 'z': 0.0, 'angle': -90.0},
+	12: {'x': -3.71, 'y': 1.1, 'z': 0.0, 'angle': 90.0},
 }
 var chunkWalls = [
 	[0, 0, 0, 0],
@@ -127,7 +127,7 @@ func removeChunks(start: Dictionary, end: Dictionary):
  
 func createChunk(x: int, z: int) -> void:
 	const wallProbability = 0.2
-	const smilerProbability = 0.1
+	const smilerProbability = 1
 	const exitProbability = 1
 	# Decide if wall is placed by probability.
 	var top := int(randf() < wallProbability)
@@ -171,7 +171,7 @@ func createChunk(x: int, z: int) -> void:
 		exitGreenInstance.position.y = exitProperties.y
 		exitGreenInstance.position.z = exitProperties.z
 		exitGreenInstance.rotation.y = deg_to_rad(exitProperties.angle)
-		add_child(exitGreenInstance)
+		chunkInstance.add_child(exitGreenInstance)
 	# Save chunk for tracking and deletion
 	if not chunks.has(x):
 		chunks[x] = {}

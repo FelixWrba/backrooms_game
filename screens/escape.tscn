@@ -1,15 +1,59 @@
-[gd_scene format=3 uid="uid://c4r5fngr8ary6"]
+[gd_scene load_steps=3 format=3 uid="uid://c4r5fngr8ary6"]
 
-[node name="Escape" type="Control"]
+[ext_resource type="Script" uid="uid://bc000ukhmxkok" path="res://screens/escape.gd" id="1_kcxmj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_n0tue"]
+font_size = 32
+
+[node name="EscapeScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_kcxmj")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Info" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 72.0
+grow_horizontal = 2
+
+[node name="Title" type="Label" parent="Info"]
+layout_mode = 2
+size_flags_horizontal = 4
 text = "Glückwunsch! Sie entkamen den Hinterzimmern unbeschadet."
+label_settings = SubResource("LabelSettings_n0tue")
+horizontal_alignment = 1
+
+[node name="Stats" type="Label" parent="Info"]
+layout_mode = 2
+text = "Begegnungen mit feindlichen Gestalten: 5"
+horizontal_alignment = 1
+
+[node name="Butttons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Replay" type="Button" parent="Butttons"]
+layout_mode = 2
+text = "Erneut spielen"
+
+[node name="Exit" type="Button" parent="Butttons"]
+layout_mode = 2
+text = "Zum Hauptmenü gehen"
+
+[connection signal="pressed" from="Butttons/Replay" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="Butttons/Exit" to="." method="_on_exit_pressed"]
