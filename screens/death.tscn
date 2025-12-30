@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://b35mktx2ai8k0"]
 
 [ext_resource type="Script" uid="uid://bjuant4g0h6h6" path="res://screens/death.gd" id="1_u0uju"]
-[ext_resource type="Shader" uid="uid://bhbflk45jygr8" path="res://vignette.gdshader" id="2_43847"]
-[ext_resource type="Shader" uid="uid://cwmwpeq8srb15" path="res://rgb_displace.gdshader" id="3_0vewd"]
+[ext_resource type="Shader" uid="uid://bhbflk45jygr8" path="res://shader/vignette.gdshader" id="2_43847"]
+[ext_resource type="Shader" uid="uid://cnq47qpv1rv5w" path="res://shader/cromatic_aberration.gdshader" id="3_0vewd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_41mcw"]
 shader = ExtResource("2_43847")
@@ -11,12 +11,8 @@ shader_parameter/color_over = Color(0.33, 0, 0, 0.43137255)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0vewd"]
 shader = ExtResource("3_0vewd")
-shader_parameter/blur_amount = 0.0
-shader_parameter/mix_amount = 0.0
-shader_parameter/color_over = Color(0, 0, 0, 1)
-shader_parameter/r_displacement = Vector2(5, 0)
-shader_parameter/g_displacement = Vector2(0, 0)
-shader_parameter/b_displacement = Vector2(-5, 0)
+shader_parameter/intensity = 2.0000000298024
+shader_parameter/threshold = 0.5000000074506
 
 [sub_resource type="LabelSettings" id="LabelSettings_a6ppo"]
 font_size = 36

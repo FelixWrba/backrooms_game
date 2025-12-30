@@ -1,8 +1,8 @@
-extends Control
+extends Node3D
 
 func _set_info(title: String, encounters: int) -> void:
-	$Info/Title.text = title
-	$Info/Stats.text = 'Begegnungen mit feindlichen Gestalten: ' + str(encounters)
+	$EscapeScreen/Info/Title.text = title
+	$EscapeScreen/Info/Stats.text = 'Begegnungen mit feindlichen Gestalten: ' + str(encounters)
 
 func _on_replay_pressed() -> void:
 	get_tree().change_scene_to_file('res://main.tscn')

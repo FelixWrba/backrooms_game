@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@export var hasEscaped := false
+
 @onready var head: Node3D = $head
 @onready var coordinates: Label = $head/Camera3D/GameOverlay/Coordinates
 @onready var crosshair: CenterContainer = $head/Camera3D/GameOverlay/Crosshair
@@ -19,7 +21,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Display the coordinates:
-	coordinates.text = "X: {0} | Z: {1}".format([str(round(position.x)), str(round(position.z))])
+	coordinates.text = "X: {0} | Y: {1} | Z: {2}".format([str(round(position.x)), str(round(position.y)), str(round(position.z))])
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -41,19 +43,20 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
 	
+	if hasEscaped: return
 	# Handle exit detection
 	var rayIntersetion = $head/RayCast3D.get_collider()
 	if rayIntersetion and rayIntersetion.name == 'ExitGreen':
 		instruction.visible = true
 		if Input.is_action_just_pressed('interact'):
-			var escapeScreenInstance = preload('res://screens/escape.tscn').instantiate()
+			var escapeScreenInstance = load("res://screens/escape.tscn").instantiate()
 			var messages = [
 				'Glückwunsch! Sie entkamen den Hinterzimmern unbeschadet.',
 				'Erfolg! Sie entkamen den Hinterzimmern mit leichten Verletzungen.',
 				'Sie entkamen den Hinterzimmern mit schweren psychischen Schäden.',
 			]
 			# Switch to exit scene.
-			escapeScreenInstance.call('_set_info', messages[clamp(floor(encounters / 2), 0, 2)], encounters)
+			escapeScreenInstance.call('_set_info', messages[clamp(floor(encounters / 2.0), 0, 2)], encounters)
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			get_tree().root.add_child(escapeScreenInstance)
 			get_tree().current_scene.queue_free()

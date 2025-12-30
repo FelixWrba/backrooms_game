@@ -117,7 +117,7 @@ _data = {
 &"death": SubResource("Animation_hqtel")
 }
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_4flbx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -165,6 +165,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Instruction" type="Label" parent="head/Camera3D/GameOverlay"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

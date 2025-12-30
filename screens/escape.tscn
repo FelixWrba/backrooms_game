@@ -1,59 +1,176 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4r5fngr8ary6"]
+[gd_scene load_steps=21 format=3 uid="uid://c4r5fngr8ary6"]
 
 [ext_resource type="Script" uid="uid://bc000ukhmxkok" path="res://screens/escape.gd" id="1_kcxmj"]
+[ext_resource type="PackedScene" uid="uid://ce8s2udm3erpf" path="res://chunk_objects/chunk_base.tscn" id="2_f2qn6"]
+[ext_resource type="PackedScene" uid="uid://dh7xaj5fwvdj" path="res://chunk_objects/light.tscn" id="3_qen5w"]
+[ext_resource type="PackedScene" uid="uid://bd5y4kcp8wpqo" path="res://chunk_objects/exit_green.tscn" id="4_6oocr"]
+[ext_resource type="PackedScene" uid="uid://dqrrmjis1m2cl" path="res://chunk_objects/small_wall.tscn" id="5_6aaar"]
+[ext_resource type="PackedScene" uid="uid://bxblh451rnqxk" path="res://chunk_objects/wall.tscn" id="6_5txms"]
+[ext_resource type="PackedScene" uid="uid://djq2781rdyser" path="res://player.tscn" id="7_6aaar"]
+[ext_resource type="Texture2D" uid="uid://dn4o2i5fksaa0" path="res://textures/skybox.hdr" id="8_5txms"]
+[ext_resource type="PackedScene" uid="uid://bq5rmnmi6yaw0" path="res://chunks/2.tscn" id="9_p84w0"]
+[ext_resource type="PackedScene" uid="uid://3rkb2krrjvla" path="res://chunks/4.tscn" id="10_y5cpu"]
+[ext_resource type="PackedScene" uid="uid://bb1jx3ydnobkq" path="res://chunks/5.tscn" id="11_bajri"]
+[ext_resource type="PackedScene" uid="uid://lf4sb8acxqq5" path="res://landscape_high.glb" id="12_y5cpu"]
+[ext_resource type="PackedScene" uid="uid://d1glgbr8arggx" path="res://landscape_mountain.glb" id="13_bajri"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n0tue"]
 font_size = 32
 
-[node name="EscapeScreen" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_u4iiu"]
+panorama = ExtResource("8_5txms")
+
+[sub_resource type="Sky" id="Sky_i167l"]
+sky_material = SubResource("PanoramaSkyMaterial_u4iiu")
+
+[sub_resource type="Environment" id="Environment_p84w0"]
+background_mode = 2
+sky = SubResource("Sky_i167l")
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 5.0
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.7021111, 0.73016655, 0.7738102, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 0.0
+fog_depth_end = 3500.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y5cpu"]
+size = Vector3(1000, 3, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bajri"]
+albedo_color = Color(0.020666648, 0.62, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5dvc7"]
+material = SubResource("StandardMaterial3D_bajri")
+size = Vector2(20000, 20000)
+
+[node name="EscapeScreen" type="Node3D"]
 script = ExtResource("1_kcxmj")
 
-[node name="Info" type="VBoxContainer" parent="."]
+[node name="EscapeScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Info" type="VBoxContainer" parent="EscapeScreen"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_right = 921.0
 offset_bottom = 72.0
 grow_horizontal = 2
 
-[node name="Title" type="Label" parent="Info"]
+[node name="Title" type="Label" parent="EscapeScreen/Info"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Glückwunsch! Sie entkamen den Hinterzimmern unbeschadet."
 label_settings = SubResource("LabelSettings_n0tue")
 horizontal_alignment = 1
 
-[node name="Stats" type="Label" parent="Info"]
+[node name="Stats" type="Label" parent="EscapeScreen/Info"]
 layout_mode = 2
 text = "Begegnungen mit feindlichen Gestalten: 5"
 horizontal_alignment = 1
 
-[node name="Butttons" type="VBoxContainer" parent="."]
+[node name="Butttons" type="VBoxContainer" parent="EscapeScreen"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = 460.0
+offset_top = 271.0
+offset_right = 652.0
+offset_bottom = 337.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Replay" type="Button" parent="Butttons"]
+[node name="Replay" type="Button" parent="EscapeScreen/Butttons"]
 layout_mode = 2
 text = "Erneut spielen"
 
-[node name="Exit" type="Button" parent="Butttons"]
+[node name="Exit" type="Button" parent="EscapeScreen/Butttons"]
 layout_mode = 2
 text = "Zum Hauptmenü gehen"
 
-[connection signal="pressed" from="Butttons/Replay" to="." method="_on_replay_pressed"]
-[connection signal="pressed" from="Butttons/Exit" to="." method="_on_exit_pressed"]
+[node name="StartBase" parent="." instance=ExtResource("2_f2qn6")]
+
+[node name="StartLight" parent="." instance=ExtResource("3_qen5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2700565, 2.96, -2.9373693)
+
+[node name="ExitGreen" parent="." instance=ExtResource("4_6oocr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2700565, 1.1, 3.9)
+
+[node name="ExitWall" parent="." instance=ExtResource("5_6aaar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2700565, 3.8, 3.975)
+
+[node name="WallExit" parent="." instance=ExtResource("6_5txms")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.53, 1.6, 0)
+
+[node name="WallExit2" parent="." instance=ExtResource("6_5txms")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.07, 1.6, 2)
+
+[node name="WallExit3" parent="." instance=ExtResource("6_5txms")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.875, 1.6, 2)
+
+[node name="Player" parent="." instance=ExtResource("7_6aaar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2700565, 1, 3)
+hasEscaped = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p84w0")
+
+[node name="Wall" parent="." instance=ExtResource("5_6aaar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4710565, 1.6, -1.878)
+
+[node name="Wall2" parent="." instance=ExtResource("6_5txms")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -3.875)
+
+[node name="2" parent="." instance=ExtResource("9_p84w0")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 0, 0)
+
+[node name="4" parent="." instance=ExtResource("10_y5cpu")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8, 0, 8)
+
+[node name="6" parent="." instance=ExtResource("10_y5cpu")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 0, -8)
+
+[node name="5" parent="." instance=ExtResource("11_bajri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
+
+[node name="Terrain" type="StaticBody3D" parent="."]
+
+[node name="landscape_high" parent="Terrain" instance=ExtResource("12_y5cpu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1000, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1102.2156, 0)
+shape = SubResource("BoxShape3D_y5cpu")
+
+[node name="landscape_mountain" parent="Terrain" instance=ExtResource("13_bajri")]
+transform = Transform3D(1, 0, 0, 0, 1.2, 0, 0, 0, 1, 2000, -1000, 0)
+
+[node name="landscape_mountain2" parent="Terrain" instance=ExtResource("13_bajri")]
+transform = Transform3D(-1, 0, -3.019916e-07, 0, 1, 0, 1.509958e-07, 0, -2, -1500, -1020, -1000)
+
+[node name="landscape_mountain4" parent="Terrain" instance=ExtResource("13_bajri")]
+transform = Transform3D(-4.371139e-08, 0, -2, 0, 2, 0, 1, 0, -8.742278e-08, 1000, -1000, -2000)
+
+[node name="landscape_mountain3" parent="Terrain" instance=ExtResource("13_bajri")]
+transform = Transform3D(-4.371139e-08, 0, 3, 0, 1.5, 0, -1, 0, -1.3113416e-07, 164.896, -1020, 1794.9026)
+
+[node name="ground" type="MeshInstance3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1200, 0)
+mesh = SubResource("PlaneMesh_5dvc7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.91631395, -0.35401496, 0.18719621, 1.8609383e-09, 0.4674519, 0.8840188, -0.40046108, -0.81003857, 0.4283327, 0, 12.794949, 0)
+light_specular = 0.5
+
+[connection signal="pressed" from="EscapeScreen/Butttons/Replay" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="EscapeScreen/Butttons/Exit" to="." method="_on_exit_pressed"]

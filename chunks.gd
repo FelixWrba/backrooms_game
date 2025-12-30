@@ -1,6 +1,6 @@
 extends Node
 
-@onready var player: CharacterBody3D = $"../../player"
+@onready var player: CharacterBody3D = $"../../Player"
 const smiler = preload("uid://b8lldogimavgu")
 const exitGreen = preload("uid://bd5y4kcp8wpqo")
 
@@ -127,7 +127,7 @@ func removeChunks(start: Dictionary, end: Dictionary):
  
 func createChunk(x: int, z: int) -> void:
 	const wallProbability = 0.2
-	const smilerProbability = 1
+	const smilerProbability = 0.5
 	const exitProbability = 1
 	# Decide if wall is placed by probability.
 	var top := int(randf() < wallProbability)
