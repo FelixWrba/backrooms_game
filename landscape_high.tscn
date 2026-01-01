@@ -1,0 +1,53 @@
+[gd_scene load_steps=11 format=3 uid="uid://bj1dns1aklkm6"]
+
+[ext_resource type="PackedScene" uid="uid://lf4sb8acxqq5" path="res://landscape_high.glb" id="1_j3ebn"]
+[ext_resource type="Shader" uid="uid://cjcqta0tyvb0i" path="res://shader/water.gdshader" id="2_7ohxe"]
+[ext_resource type="Texture2D" uid="uid://dh52tt7irj3ws" path="res://textures/floor_pavement_diff_1k.jpg" id="3_v6d83"]
+[ext_resource type="Texture2D" uid="uid://ddo0aq4iug7e3" path="res://textures/floor_pavement_disp_1k.png" id="4_fdigq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ohxe"]
+size = Vector3(15, 20, 130)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ellod"]
+render_priority = 0
+shader = ExtResource("2_7ohxe")
+shader_parameter/Color = Color(0, 0.014000015, 0.12, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v6d83"]
+material = SubResource("ShaderMaterial_ellod")
+size = Vector2(1500, 1500)
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ril4"]
+albedo_texture = ExtResource("3_v6d83")
+heightmap_texture = ExtResource("4_fdigq")
+uv1_scale = Vector3(15, 130, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ohxe"]
+material = SubResource("StandardMaterial3D_7ril4")
+size = Vector3(15, 20, 130)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v6d83"]
+size = Vector3(1000, 10, 1000)
+
+[node name="LandscapeHigh" type="StaticBody3D"]
+
+[node name="landscape_high" parent="." instance=ExtResource("1_j3ebn")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 227, -40, 236)
+shape = SubResource("BoxShape3D_7ohxe")
+debug_color = Color(0, 0.5100001, 0.6, 1)
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+mesh = SubResource("PlaneMesh_v6d83")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 227, -40, 236)
+mesh = SubResource("BoxMesh_7ohxe")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 227, -36, 236)
+shape = SubResource("BoxShape3D_v6d83")
