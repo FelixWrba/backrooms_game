@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export var hasEscaped := false
 
 @onready var head: Node3D = $head
+@onready var camera: Camera3D = $head/Camera3D
 @onready var coordinates: Label = $head/Camera3D/GameOverlay/Coordinates
 @onready var crosshair: CenterContainer = $head/Camera3D/GameOverlay/Crosshair
 @onready var instruction: Label = $head/Camera3D/GameOverlay/Instruction
@@ -11,13 +12,22 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.5
 
+var walk_bob_speed := 8.0
+var walk_bob_amount := 0.05
+var walk_sway_amount := 0.025
+
+var bob_time := 0.0
+var base_head_position: Vector3
+
 var isPaused := false
 var isDead := false
 var encounters := 0
+var walked := 0.0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	crosshair.queue_redraw()
+	base_head_position = camera.position
 
 func _physics_process(delta: float) -> void:
 	# Display the coordinates:
@@ -38,10 +48,40 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
+		if not $WalkingAudio.playing:
+			$WalkingAudio.play()
 	else:
+		if $WalkingAudio.playing:
+			$WalkingAudio.stop()
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
+	
+	# Camera shake
+	var horizontal_speed := Vector2(velocity.x, velocity.z).length()
+	var is_walking := horizontal_speed > 0.1 and is_on_floor() and not isPaused and not isDead
+	if is_walking:
+		bob_time += delta * walk_bob_speed
+		# Vertical bob
+		var bob_y = sin(bob_time * 2.0) * walk_bob_amount
+		# Horizontal sway
+		var bob_x = sin(bob_time) * walk_sway_amount
+		# Update camera position smoothly
+		camera.position = camera.position.lerp(
+			base_head_position + Vector3(bob_x, bob_y, 0),
+			10.0 * delta
+		)
+	else:
+		# Reset camera
+		bob_time = 0.0
+		camera.position = camera.position.lerp(base_head_position, 8.0 * delta)
+		camera.rotation.z = lerp(camera.rotation.z, 0.0, 6.0 * delta)
+	# Camera rotation
+	camera.rotation.z = lerp(
+		head.rotation.z,
+		sin(bob_time) * 0.01,
+		6.0 * delta
+	)
 	
 	if hasEscaped: return
 	# Handle exit detection

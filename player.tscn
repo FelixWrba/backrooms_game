@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://djq2781rdyser"]
+[gd_scene load_steps=12 format=3 uid="uid://djq2781rdyser"]
 
 [ext_resource type="Script" uid="uid://c3qgrfxkufrvj" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://bua0ohmdym1mc" path="res://effects.tscn" id="2_hqtel"]
 [ext_resource type="PackedScene" uid="uid://b35mktx2ai8k0" path="res://screens/death.tscn" id="2_i3pqv"]
 [ext_resource type="PackedScene" uid="uid://bru2yd5a30up6" path="res://screens/pause.tscn" id="2_onrkg"]
+[ext_resource type="AudioStream" uid="uid://c5q1gwskx0ih" path="res://sounds/walking.wav" id="5_sweqy"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -195,6 +196,10 @@ target_position = Vector3(0, 0, -1.5)
 libraries = {
 &"": SubResource("AnimationLibrary_sweqy")
 }
+
+[node name="WalkingAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_sweqy")
+pitch_scale = 1.25
 
 [connection signal="draw" from="head/Camera3D/GameOverlay/Crosshair" to="." method="_on_crosshair_draw"]
 [connection signal="continue_game" from="head/Camera3D/pause" to="." method="_on_pause_continue_game"]

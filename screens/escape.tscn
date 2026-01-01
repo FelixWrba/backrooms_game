@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c4r5fngr8ary6"]
+[gd_scene load_steps=18 format=3 uid="uid://c4r5fngr8ary6"]
 
 [ext_resource type="Script" uid="uid://bc000ukhmxkok" path="res://screens/escape.gd" id="1_kcxmj"]
 [ext_resource type="PackedScene" uid="uid://ce8s2udm3erpf" path="res://chunk_objects/chunk_base.tscn" id="2_f2qn6"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://3rkb2krrjvla" path="res://chunks/4.tscn" id="10_y5cpu"]
 [ext_resource type="PackedScene" uid="uid://bb1jx3ydnobkq" path="res://chunks/5.tscn" id="11_bajri"]
 [ext_resource type="PackedScene" uid="uid://bj1dns1aklkm6" path="res://landscape_high.tscn" id="12_bajri"]
+[ext_resource type="AudioStream" uid="uid://d0csqcb0u4s64" path="res://sounds/wind.mp3" id="13_5dvc7"]
 [ext_resource type="PackedScene" uid="uid://d1glgbr8arggx" path="res://landscape_mountain.glb" id="13_bajri"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n0tue"]
@@ -170,6 +171,11 @@ text = "Drücke E um fortzufahren"
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 230, -1010, 160)
+
+[node name="WindAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_5dvc7")
+volume_db = 1.0
+pitch_scale = 2.0
 
 [connection signal="pressed" from="EscapeScreen/Butttons/Replay" to="." method="_on_replay_pressed"]
 [connection signal="pressed" from="EscapeScreen/Butttons/Exit" to="." method="_on_exit_pressed"]

@@ -9,6 +9,12 @@ var canShowEscapeScreen = false
 func _process(_delta: float) -> void:
 	if level.visible and player.position.y < -100:
 		level.visible = false
+		
+	if not $WindAudio.playing and not canShowEscapeScreen and not player.is_on_floor() and player.position.y < 0:
+		$WindAudio.play()
+		
+	if $WindAudio.playing and player.is_on_floor():
+		$WindAudio.stop()
 	
 	if not canShowEscapeScreen and player.is_on_floor() and player.position.y < -800:
 		canShowEscapeScreen = true

@@ -1,28 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://bua0ohmdym1mc"]
+[gd_scene load_steps=5 format=3 uid="uid://bua0ohmdym1mc"]
 
-[ext_resource type="Shader" uid="uid://cnq47qpv1rv5w" path="res://shader/cromatic_aberration.gdshader" id="2_nwluy"]
+[ext_resource type="Shader" uid="uid://dipgc1ahefjei" path="res://shader/effects.gdshader" id="2_nwluy"]
 [ext_resource type="Shader" uid="uid://bhbflk45jygr8" path="res://shader/vignette.gdshader" id="2_ttf8j"]
-[ext_resource type="Shader" uid="uid://c6ipicl6bxtfp" path="res://shader/bloom.gdshader" id="3_ttf8j"]
-[ext_resource type="Shader" uid="uid://d07qec8ton74" path="res://shader/noise.gdshader" id="4_1hsv4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_753un"]
 shader = ExtResource("2_ttf8j")
 shader_parameter/outerRadius = 1.0
 shader_parameter/color_over = Color(0, 0, 0, 0.38039216)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hsv4"]
-shader = ExtResource("3_ttf8j")
-shader_parameter/bloom_spread = 0.5
-shader_parameter/bloom_intensity = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oaf0w"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ttf8j"]
 shader = ExtResource("2_nwluy")
-shader_parameter/intensity = 1.0
-shader_parameter/threshold = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bf8d8"]
-shader = ExtResource("4_1hsv4")
-shader_parameter/noise_intensity = 0.05
 
 [node name="Effects" type="Control"]
 layout_mode = 3
@@ -33,7 +20,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Vignette" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_753un")
 layout_mode = 1
 anchors_preset = 15
@@ -43,31 +29,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
-[node name="Bloom" type="ColorRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_1hsv4")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0)
-
-[node name="ChromaticAberration" type="ColorRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_oaf0w")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0)
-
-[node name="Noise" type="ColorRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_bf8d8")
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ttf8j")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
