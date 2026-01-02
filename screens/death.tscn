@@ -2,17 +2,19 @@
 
 [ext_resource type="Script" uid="uid://bjuant4g0h6h6" path="res://screens/death.gd" id="1_u0uju"]
 [ext_resource type="Shader" uid="uid://bhbflk45jygr8" path="res://shader/vignette.gdshader" id="2_43847"]
-[ext_resource type="Shader" uid="uid://cnq47qpv1rv5w" path="res://shader/cromatic_aberration.gdshader" id="3_0vewd"]
+[ext_resource type="Shader" uid="uid://dipgc1ahefjei" path="res://shader/effects.gdshader" id="3_0vewd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_41mcw"]
 shader = ExtResource("2_43847")
 shader_parameter/outerRadius = 1.0
-shader_parameter/color_over = Color(0.33, 0, 0, 0.43137255)
+shader_parameter/color_over = Color(0.78, 0, 0, 0.8392157)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0vewd"]
 shader = ExtResource("3_0vewd")
-shader_parameter/intensity = 2.0000000298024
-shader_parameter/threshold = 0.5000000074506
+shader_parameter/aberration = 0.00999999977648
+shader_parameter/bloom_threshold = 1.0000000475
+shader_parameter/bloom_intensity = 2.0
+shader_parameter/blur_radius = 3.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_a6ppo"]
 font_size = 36
@@ -60,15 +62,18 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="ui"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -305.0
-offset_top = 22.0
-offset_right = 305.0
-offset_bottom = 72.0
+anchor_bottom = 0.5
+offset_left = -370.5
+offset_top = -287.0
+offset_right = 370.5
+offset_bottom = -237.0
 grow_horizontal = 2
-text = "Sie wurden durch feindliche Gestalt getötet."
+grow_vertical = 2
+text = "Sie wurden von feindlicher Gestalt getötet."
 label_settings = SubResource("LabelSettings_a6ppo")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ui"]

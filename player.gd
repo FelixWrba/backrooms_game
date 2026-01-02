@@ -8,13 +8,15 @@ extends CharacterBody3D
 @onready var crosshair: CenterContainer = $head/Camera3D/GameOverlay/Crosshair
 @onready var instruction: Label = $head/Camera3D/GameOverlay/Instruction
 
-const SPEED = 5.0
+const SPEED = 3.0
+const ACCELERATION = 10.0
+const SPRINT_SPEED = 6.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.5
 
 var walk_bob_speed := 8.0
-var walk_bob_amount := 0.05
-var walk_sway_amount := 0.025
+var walk_bob_amount := 0.02
+var walk_sway_amount := 0.01
 
 var bob_time := 0.0
 var base_head_position: Vector3
@@ -28,6 +30,10 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	crosshair.queue_redraw()
 	base_head_position = camera.position
+	# Scene transistion
+	var tween = create_tween()
+	tween.tween_property($head/Camera3D/GameOverlay/BlackOverlay, 'color', Color(0.0, 0.0, 0.0, 0.0), 2.0)
+	tween.tween_property($head/Camera3D/GameOverlay/BlackOverlay, 'visible', false, 0.1)
 
 func _physics_process(delta: float) -> void:
 	# Display the coordinates:
@@ -46,15 +52,24 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		var target_speed = SPEED 
+		if Input.is_action_pressed('sprint'):
+			target_speed= SPRINT_SPEED
+			if $WalkingAudio.pitch_scale == 1.25:
+				$WalkingAudio.pitch_scale = lerp($WalkingAudio.pitch_scale, 2.0, 0.1 * delta)
+				$WalkingAudio.volume_db = lerp($WalkingAudio.volume_db, 3.0, 0.1 * delta)
+		elif $WalkingAudio.pitch_scale == 2:
+				$WalkingAudio.pitch_scale = lerp($WalkingAudio.pitch_scale, 1.25, 0.1 * delta)
+				$WalkingAudio.volume_db = lerp($WalkingAudio.volume_db, 0.0, 0.1 * delta)
+		velocity.x = lerp(velocity.x, direction.x * target_speed, delta * ACCELERATION)
+		velocity.z = lerp(velocity.z, direction.z * target_speed, delta * ACCELERATION)
 		if not $WalkingAudio.playing:
 			$WalkingAudio.play()
 	else:
 		if $WalkingAudio.playing:
 			$WalkingAudio.stop()
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = lerp(velocity.x, 0.0, delta * ACCELERATION)
+		velocity.z = lerp(velocity.z, 0.0, delta * ACCELERATION)
 	move_and_slide()
 	
 	# Camera shake
@@ -63,9 +78,9 @@ func _physics_process(delta: float) -> void:
 	if is_walking:
 		bob_time += delta * walk_bob_speed
 		# Vertical bob
-		var bob_y = sin(bob_time * 2.0) * walk_bob_amount
+		var bob_y = sin(bob_time * 2.0) * walk_bob_amount * horizontal_speed
 		# Horizontal sway
-		var bob_x = sin(bob_time) * walk_sway_amount
+		var bob_x = sin(bob_time) * walk_sway_amount * horizontal_speed
 		# Update camera position smoothly
 		camera.position = camera.position.lerp(
 			base_head_position + Vector3(bob_x, bob_y, 0),
@@ -83,7 +98,10 @@ func _physics_process(delta: float) -> void:
 		6.0 * delta
 	)
 	
-	if hasEscaped: return
+	if hasEscaped:
+		if $head/Camera3D/Effects.visible:
+			$head/Camera3D/Effects.visible = false
+		return
 	# Handle exit detection
 	var rayIntersetion = $head/RayCast3D.get_collider()
 	if rayIntersetion and rayIntersetion.name == 'ExitGreen':

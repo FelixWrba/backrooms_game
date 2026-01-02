@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c4r5fngr8ary6"]
+[gd_scene load_steps=20 format=3 uid="uid://c4r5fngr8ary6"]
 
 [ext_resource type="Script" uid="uid://bc000ukhmxkok" path="res://screens/escape.gd" id="1_kcxmj"]
 [ext_resource type="PackedScene" uid="uid://ce8s2udm3erpf" path="res://chunk_objects/chunk_base.tscn" id="2_f2qn6"]
@@ -13,6 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://bj1dns1aklkm6" path="res://landscape_high.tscn" id="12_bajri"]
 [ext_resource type="AudioStream" uid="uid://d0csqcb0u4s64" path="res://sounds/wind.mp3" id="13_5dvc7"]
 [ext_resource type="PackedScene" uid="uid://d1glgbr8arggx" path="res://landscape_mountain.glb" id="13_bajri"]
+[ext_resource type="Shader" uid="uid://757efmufqsvj" path="res://shader/escape.gdshader" id="14_5dvc7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qgnny"]
+shader = ExtResource("14_5dvc7")
 
 [sub_resource type="LabelSettings" id="LabelSettings_n0tue"]
 font_size = 32
@@ -38,6 +42,25 @@ fog_depth_end = 4000.0
 
 [node name="EscapeScreen" type="Node3D"]
 script = ExtResource("1_kcxmj")
+
+[node name="EscapeEffects" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_qgnny")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="BlackOverlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="EscapeScreen" type="Control" parent="."]
 visible = false
@@ -75,9 +98,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -96.0
+offset_left = -139.75
 offset_top = -33.0
-offset_right = 96.0
+offset_right = 139.75
 offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -88,7 +111,7 @@ text = "Erneut spielen"
 
 [node name="Exit" type="Button" parent="EscapeScreen/Butttons"]
 layout_mode = 2
-text = "Zum Hauptmenü gehen"
+text = "Zum Hauptmenü verlassen"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p84w0")
@@ -136,6 +159,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4710565, 1.6, -1.878)
 [node name="Wall2" parent="Level" instance=ExtResource("6_5txms")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -3.875)
 
+[node name="WallLong" parent="Level" instance=ExtResource("6_5txms")]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 1, -404, 1.6, -3.875)
+
+[node name="WallLong2" parent="Level" instance=ExtResource("6_5txms")]
+transform = Transform3D(-4.371139e-06, 0, 1, 0, 1, 0, -100, 0, -4.371139e-08, 19.875, 1.6, 412)
+
 [node name="2" parent="Level" instance=ExtResource("9_p84w0")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 0, 0)
 
@@ -148,6 +177,15 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24, 
 [node name="5" parent="Level" instance=ExtResource("11_bajri")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
 
+[node name="ChunkBase" parent="Level" instance=ExtResource("2_f2qn6")]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, -380, 0, 412)
+
+[node name="ChunkBase2" parent="Level" instance=ExtResource("2_f2qn6")]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 2, -404, 0, 4)
+
+[node name="ChunkBase3" parent="Level" instance=ExtResource("2_f2qn6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.8650201, 0.43272865, -0.2539413, 0, 0.5061241, 0.8624607, 0.50173724, -0.7460458, 0.4378075, 0, 12.794949, 0)
 light_specular = 0.5
@@ -155,7 +193,7 @@ directional_shadow_mode = 0
 directional_shadow_max_distance = 4000.0
 
 [node name="Player" parent="." instance=ExtResource("7_6aaar")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 210.45503, 1, 238)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 210.3017, 1, 238.62524)
 hasEscaped = true
 
 [node name="Instruction" type="Label" parent="."]

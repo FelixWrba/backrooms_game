@@ -1,14 +1,27 @@
-[gd_scene load_steps=12 format=3 uid="uid://djq2781rdyser"]
+[gd_scene load_steps=15 format=3 uid="uid://djq2781rdyser"]
 
 [ext_resource type="Script" uid="uid://c3qgrfxkufrvj" path="res://player.gd" id="1_4flbx"]
-[ext_resource type="PackedScene" uid="uid://bua0ohmdym1mc" path="res://effects.tscn" id="2_hqtel"]
+[ext_resource type="Shader" uid="uid://bhbflk45jygr8" path="res://shader/vignette.gdshader" id="2_2hs0m"]
 [ext_resource type="PackedScene" uid="uid://b35mktx2ai8k0" path="res://screens/death.tscn" id="2_i3pqv"]
 [ext_resource type="PackedScene" uid="uid://bru2yd5a30up6" path="res://screens/pause.tscn" id="2_onrkg"]
+[ext_resource type="Shader" uid="uid://dipgc1ahefjei" path="res://shader/effects.gdshader" id="3_1jxqw"]
 [ext_resource type="AudioStream" uid="uid://c5q1gwskx0ih" path="res://sounds/walking.wav" id="5_sweqy"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dw050"]
+shader = ExtResource("2_2hs0m")
+shader_parameter/outerRadius = 1.0
+shader_parameter/color_over = Color(0, 0, 0, 0.38039216)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b26j0"]
+shader = ExtResource("3_1jxqw")
+shader_parameter/aberration = 0.0010000000475
+shader_parameter/bloom_threshold = 0.0
+shader_parameter/bloom_intensity = 0.0
+shader_parameter/blur_radius = 0.5
 
 [sub_resource type="LabelSettings" id="LabelSettings_hqtel"]
 font_color = Color(1, 1, 1, 0.78431374)
@@ -134,7 +147,33 @@ transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="head"]
 
-[node name="Effects" parent="head/Camera3D" instance=ExtResource("2_hqtel")]
+[node name="Vignette" type="ColorRect" parent="head/Camera3D"]
+material = SubResource("ShaderMaterial_dw050")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Effects" type="ColorRect" parent="head/Camera3D"]
+material = SubResource("ShaderMaterial_b26j0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="EscapeEffects" type="ColorRect" parent="head/Camera3D"]
+visible = false
+material = SubResource("ShaderMaterial_b26j0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
 
 [node name="GameOverlay" type="Control" parent="head/Camera3D"]
 layout_mode = 3
@@ -143,6 +182,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="BlackOverlay" type="ColorRect" parent="head/Camera3D/GameOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="Coordinates" type="Label" parent="head/Camera3D/GameOverlay"]
 layout_mode = 0
@@ -158,10 +206,6 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 

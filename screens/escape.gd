@@ -6,8 +6,14 @@ extends Node3D
 
 var canShowEscapeScreen = false
 
+func _ready() -> void:
+	# Scene transistion
+	var tween = create_tween()
+	tween.tween_property($BlackOverlay, 'color', Color(0.0, 0.0, 0.0, 0.0), 1.0)
+	tween.tween_property($BlackOverlay, 'visible', false, 0.1)
+
 func _process(_delta: float) -> void:
-	if level.visible and player.position.y < -100:
+	if level.visible and player.position.y < -800:
 		level.visible = false
 		
 	if not $WindAudio.playing and not canShowEscapeScreen and not player.is_on_floor() and player.position.y < 0:

@@ -1,14 +1,27 @@
-[gd_scene load_steps=17 format=3 uid="uid://ce721ykaspukj"]
+[gd_scene load_steps=20 format=3 uid="uid://ce721ykaspukj"]
 
 [ext_resource type="PackedScene" uid="uid://g6x5cxk0a8gj" path="res://chunks/0.tscn" id="1_4hy44"]
 [ext_resource type="PackedScene" uid="uid://bq5rmnmi6yaw0" path="res://chunks/2.tscn" id="2_ytr4m"]
 [ext_resource type="PackedScene" uid="uid://3rkb2krrjvla" path="res://chunks/4.tscn" id="3_l48gv"]
 [ext_resource type="PackedScene" uid="uid://bl86rxp5sklx1" path="res://chunks/6.tscn" id="4_ecwwl"]
-[ext_resource type="PackedScene" uid="uid://bua0ohmdym1mc" path="res://effects.tscn" id="4_gq33n"]
 [ext_resource type="Script" uid="uid://bg2axuu48yq8f" path="res://screens/menu.gd" id="4_l48gv"]
+[ext_resource type="Shader" uid="uid://bhbflk45jygr8" path="res://shader/vignette.gdshader" id="5_16v1w"]
 [ext_resource type="PackedScene" uid="uid://ddkmrk1vutgkq" path="res://chunks/12.tscn" id="5_ytr4m"]
+[ext_resource type="Shader" uid="uid://dipgc1ahefjei" path="res://shader/effects.gdshader" id="6_45kd6"]
 [ext_resource type="PackedScene" uid="uid://b8lldogimavgu" path="res://smiler.tscn" id="8_tsmig"]
 [ext_resource type="AudioStream" uid="uid://bied7bkmxknd0" path="res://sounds/ambience_0.mp3" id="9_rbf75"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0jpem"]
+shader = ExtResource("5_16v1w")
+shader_parameter/outerRadius = 1.0
+shader_parameter/color_over = Color(0, 0, 0, 0.38039216)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xao2u"]
+shader = ExtResource("6_45kd6")
+shader_parameter/aberration = 0.002
+shader_parameter/bloom_threshold = 0.10000000475
+shader_parameter/bloom_intensity = 0.2000000095
+shader_parameter/blur_radius = 1.5
 
 [sub_resource type="LabelSettings" id="LabelSettings_4hy44"]
 font_size = 48
@@ -129,7 +142,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 7)
 transform = Transform3D(-0.3255681, 0, -0.9455186, 0, 1, 0, 0.9455186, 0, -0.3255681, -3.133, 1.8, 0.7113614)
 far = 100.0
 
-[node name="Effects" parent="Camera3D" instance=ExtResource("4_gq33n")]
+[node name="Vignette" type="ColorRect" parent="Camera3D"]
+material = SubResource("ShaderMaterial_0jpem")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Effects" type="ColorRect" parent="Camera3D"]
+material = SubResource("ShaderMaterial_xao2u")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
 
 [node name="menu" type="Control" parent="Camera3D"]
 layout_mode = 3

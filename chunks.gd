@@ -128,7 +128,7 @@ func removeChunks(start: Dictionary, end: Dictionary):
 func createChunk(x: int, z: int) -> void:
 	const wallProbability = 0.2
 	const smilerProbability = 0.5
-	const exitProbability = 1
+	var exitProbability = clamp(sqrt(x * x + z * z) * 0.001 - 0.06, 0.0, 0.2)
 	# Decide if wall is placed by probability.
 	var top := int(randf() < wallProbability)
 	var right := int(randf() < wallProbability)
@@ -165,6 +165,7 @@ func createChunk(x: int, z: int) -> void:
 		chunkInstance.add_child(smilerInstance)
 	# Add exit doors
 	if exitChunks.has(selectedChunk.id) and randf() < exitProbability:
+		print('Exit at: ' + str(x) + ', ' + str(z))
 		var exitGreenInstance = exitGreen.instantiate()
 		var exitProperties = exitChunks[selectedChunk.id]
 		exitGreenInstance.position.x = exitProperties.x
