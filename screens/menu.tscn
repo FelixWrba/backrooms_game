@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ce721ykaspukj"]
+[gd_scene load_steps=21 format=3 uid="uid://ce721ykaspukj"]
 
 [ext_resource type="PackedScene" uid="uid://g6x5cxk0a8gj" path="res://chunks/0.tscn" id="1_4hy44"]
 [ext_resource type="PackedScene" uid="uid://bq5rmnmi6yaw0" path="res://chunks/2.tscn" id="2_ytr4m"]
@@ -18,10 +18,10 @@ shader_parameter/color_over = Color(0, 0, 0, 0.38039216)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xao2u"]
 shader = ExtResource("6_45kd6")
-shader_parameter/aberration = 0.002
+shader_parameter/aberration = 0.00400000019
 shader_parameter/bloom_threshold = 0.10000000475
-shader_parameter/bloom_intensity = 0.2000000095
-shader_parameter/blur_radius = 1.5
+shader_parameter/bloom_intensity = 0.0
+shader_parameter/blur_radius = 3.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_4hy44"]
 font_size = 48
@@ -32,6 +32,12 @@ outline_color = Color(0, 0, 0, 1)
 font_size = 12
 outline_size = 1
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16v1w"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
 
 [sub_resource type="Animation" id="Animation_ecwwl"]
 length = 0.001
@@ -199,6 +205,10 @@ grow_vertical = 2
 layout_mode = 2
 text = "Spielen"
 
+[node name="info_button" type="Button" parent="Camera3D/menu/Control"]
+layout_mode = 2
+text = "Anleitung"
+
 [node name="exit_button" type="Button" parent="Camera3D/menu/Control"]
 layout_mode = 2
 text = "Verlassen"
@@ -215,6 +225,23 @@ offset_bottom = -7.0
 grow_vertical = 0
 text = "(c) Copyright 2025 Felix Wrba. Alle Rechte vorbehalten."
 label_settings = SubResource("LabelSettings_l48gv")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="Camera3D/menu"]
+oversampling_override = 1.0
+title = "Anleitung"
+initial_position = 1
+size = Vector2i(301, 288)
+theme_override_styles/panel = SubResource("StyleBoxEmpty_16v1w")
+ok_button_text = "Schließen"
+dialog_text = "Steuerung des Spielers:
+- Vorwärts: W
+- Rückwärts: S
+- Rechts: D
+- Links: A
+- Sprinten: Umschalttaste
+Ziel:
+- Verlassen der Hinterzimmer
+- Feindlichen Gestalten meiden"
 
 [node name="black" type="ColorRect" parent="Camera3D"]
 anchors_preset = 15
@@ -247,9 +274,11 @@ isHostile = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_rbf75")
+volume_db = -1.0
 autoplay = true
 parameters/looping = true
 
 [connection signal="pressed" from="Camera3D/menu/Control/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Camera3D/menu/Control/info_button" to="." method="_on_info_button_pressed"]
 [connection signal="pressed" from="Camera3D/menu/Control/exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

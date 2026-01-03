@@ -18,10 +18,10 @@ shader_parameter/color_over = Color(0, 0, 0, 0.38039216)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b26j0"]
 shader = ExtResource("3_1jxqw")
-shader_parameter/aberration = 0.0010000000475
-shader_parameter/bloom_threshold = 0.0
+shader_parameter/aberration = 0.00400000019
+shader_parameter/bloom_threshold = 0.10000000475
 shader_parameter/bloom_intensity = 0.0
-shader_parameter/blur_radius = 0.5
+shader_parameter/blur_radius = 3.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_hqtel"]
 font_color = Color(1, 1, 1, 0.78431374)
@@ -198,6 +198,7 @@ offset_left = 23.0
 offset_top = 19.0
 offset_right = 63.0
 offset_bottom = 42.0
+text = "X: 00 | Y: 00 | Z: 00"
 
 [node name="Crosshair" type="CenterContainer" parent="head/Camera3D/GameOverlay"]
 layout_mode = 1
@@ -225,6 +226,22 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Drücke E zum Interagieren"
 label_settings = SubResource("LabelSettings_hqtel")
+
+[node name="SprintBar" type="ProgressBar" parent="head/Camera3D/GameOverlay"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -197.0
+offset_top = -34.0
+offset_right = -7.0
+offset_bottom = -7.0
+grow_horizontal = 0
+grow_vertical = 0
+max_value = 5.0
+value = 5.0
 
 [node name="pause" parent="head/Camera3D" instance=ExtResource("2_onrkg")]
 visible = false

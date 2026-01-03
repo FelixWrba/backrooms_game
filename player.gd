@@ -11,6 +11,7 @@ extends CharacterBody3D
 const SPEED = 3.0
 const ACCELERATION = 10.0
 const SPRINT_SPEED = 6.0
+const SPRINT_TIME = 5.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.5
 
@@ -20,6 +21,7 @@ var walk_sway_amount := 0.01
 
 var bob_time := 0.0
 var base_head_position: Vector3
+var sprint_cooldown = 5.0
 
 var isPaused := false
 var isDead := false
@@ -38,7 +40,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# Display the coordinates:
 	coordinates.text = "X: {0} | Y: {1} | Z: {2}".format([str(round(position.x)), str(round(position.y)), str(round(position.z))])
-	
+	$head/Camera3D/GameOverlay/SprintBar.value = sprint_cooldown
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -51,25 +53,40 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var target_speed: float = SPEED # Walking
+	var is_falling := velocity.y < -10.0
+	
 	if direction:
-		var target_speed = SPEED 
-		if Input.is_action_pressed('sprint'):
-			target_speed= SPRINT_SPEED
-			if $WalkingAudio.pitch_scale == 1.25:
+		if Input.is_action_pressed('sprint') and sprint_cooldown > delta: # Sprinting
+			sprint_cooldown = max(sprint_cooldown - delta, 0.0)
+			target_speed = SPRINT_SPEED
+			if $WalkingAudio.pitch_scale < 2: # Transistion to sprint
 				$WalkingAudio.pitch_scale = lerp($WalkingAudio.pitch_scale, 2.0, 0.1 * delta)
 				$WalkingAudio.volume_db = lerp($WalkingAudio.volume_db, 3.0, 0.1 * delta)
-		elif $WalkingAudio.pitch_scale == 2:
+			if camera.fov < 90.0 and not is_falling:
+				camera.fov = lerp(camera.fov, 90.0, 5.0 * delta)
+		else:
+			sprint_cooldown = min(sprint_cooldown + delta * 0.25, SPRINT_TIME)
+			if $WalkingAudio.pitch_scale > 1.25: # Transistion to walk
 				$WalkingAudio.pitch_scale = lerp($WalkingAudio.pitch_scale, 1.25, 0.1 * delta)
 				$WalkingAudio.volume_db = lerp($WalkingAudio.volume_db, 0.0, 0.1 * delta)
-		velocity.x = lerp(velocity.x, direction.x * target_speed, delta * ACCELERATION)
-		velocity.z = lerp(velocity.z, direction.z * target_speed, delta * ACCELERATION)
+			if camera.fov > 75.0 and not is_falling:
+				camera.fov = lerp(camera.fov, 75.0, 5.0 * delta)
 		if not $WalkingAudio.playing:
 			$WalkingAudio.play()
-	else:
+	else: # Stopping
+		sprint_cooldown = min(sprint_cooldown + delta * 0.5, SPRINT_TIME)
+		target_speed = 0.0
 		if $WalkingAudio.playing:
 			$WalkingAudio.stop()
-		velocity.x = lerp(velocity.x, 0.0, delta * ACCELERATION)
-		velocity.z = lerp(velocity.z, 0.0, delta * ACCELERATION)
+		if camera.fov > 75.0 and not is_falling:
+			camera.fov = lerp(camera.fov, 75.0, 5.0 * delta)
+			
+	if is_falling:
+		camera.fov = lerp(camera.fov, velocity.y * -0.3 + 75, delta * 5.0)
+	# Update velocity smoothly.
+	velocity.x = lerp(velocity.x, direction.x * target_speed, delta * ACCELERATION)
+	velocity.z = lerp(velocity.z, direction.z * target_speed, delta * ACCELERATION)
 	move_and_slide()
 	
 	# Camera shake

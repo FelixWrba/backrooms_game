@@ -9,13 +9,14 @@ background_color = Color(0.34360203, 0.28323072, 1.92523e-07, 1)
 background_energy_multiplier = 0.0
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.0
+fog_enabled = true
 fog_mode = 1
 fog_light_color = Color(0.12347304, 0.12347304, 0.12347304, 1)
 fog_light_energy = 0.0
 fog_density = 1.0
-fog_depth_curve = 0.9659362
-fog_depth_begin = 32.0
-fog_depth_end = 1000.0
+fog_depth_curve = 4.0
+fog_depth_begin = 0.0
+fog_depth_end = 64.0
 
 [node name="Node3D" type="Node3D"]
 

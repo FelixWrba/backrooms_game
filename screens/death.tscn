@@ -7,13 +7,13 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_41mcw"]
 shader = ExtResource("2_43847")
 shader_parameter/outerRadius = 1.0
-shader_parameter/color_over = Color(0.78, 0, 0, 0.8392157)
+shader_parameter/color_over = Color(0.16403028, 6.843591e-08, 1.504086e-08, 0.8392157)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0vewd"]
 shader = ExtResource("3_0vewd")
 shader_parameter/aberration = 0.00999999977648
-shader_parameter/bloom_threshold = 1.0000000475
-shader_parameter/bloom_intensity = 2.0
+shader_parameter/bloom_threshold = 0.10000000475
+shader_parameter/bloom_intensity = 0.10000000475
 shader_parameter/blur_radius = 3.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_a6ppo"]

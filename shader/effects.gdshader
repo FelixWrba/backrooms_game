@@ -40,7 +40,7 @@ void fragment() {
 
     // --- Noise ---
     float noise = fract(sin(dot(uv + TIME, vec2(12.9898,78.233))) * 43758.5453);
-    color.rgb += (noise - 0.5) * 0.05;
+    color.rgb += (noise - 0.5) * 0.07;
 
 	COLOR = color;
 }
